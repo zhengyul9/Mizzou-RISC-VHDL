@@ -1,0 +1,16 @@
+Library ieee;
+use ieee.std_logic_1164.all;
+entity sele is
+generic(N:natural);
+port (--d1,d2:in bit_vector;
+          s:in bit;
+	  y:out bit_vector(N-1 downto 0));
+end entity sele;
+
+Architecture behave of sele is
+signal q:bit_vector(N-1 downto 0):= (others => '0');
+signal p:bit_vector(N-1 downto 0):= (others => '1');
+begin 
+   y <= q when s = '0'
+           else  p;
+end behave;

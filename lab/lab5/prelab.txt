@@ -1,0 +1,9 @@
+What is the function of GENERIC?
+
+Generics are commonly used to specify parameters for a component in such a way
+that the parameter values may be specified when the component is instantiated.
+
+
+How can one instantiate a Generic component?
+
+Generics are declared before the ports. For a component with generics, a generic map declared before the port map. This allows a value to be set for the generic.

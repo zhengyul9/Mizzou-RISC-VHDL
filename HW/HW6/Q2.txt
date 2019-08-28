@@ -1,0 +1,40 @@
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.numeric_bit.all;
+
+entity adder is
+	--type matrix is array ( natural range <>, natural range<>) of integer;
+	port(clk : in bit);
+end adder;
+
+architecture behavior of adder is
+	type matrix is array ( natural range <>, natural range<>) of integer;
+	signal AA :matrix( 2 DOWNTO 0 , 1 downto 0);
+	signal BB : matrix( 3 DOWNTO 0 , 4 downto 0);
+	signal CC : matrix( 2 DOWNTO 0, 1 downto 0);
+	procedure ADDMATRIX (  AA,BB: in matrix; signal CC: out matrix ) is
+		variable A1:matrix(0 to AA'length(1)-1 , AA'length(2)-1 downto 0);
+		variable B1:matrix(0 to BB'length(1)-1 , BB'length(2)-1 downto 0);
+		variable C1:matrix(0 to AA'length(1)-1 , AA'length(2)-1 downto 0);
+	begin
+		assert A1'length(1) = B1'length(1) and  A1'length(2) = B1'length(2);
+		report "Length must be equal!"
+		severity error;
+		loop1: for i in A1'range(1) loop
+ 			loop2: for j in A1'range(2) loop
+ 				C1(i,j):= A1(i,j) + B1(i,j);
+ 			end loop loop2;
+		end loop loop1;
+		CC <= C1;
+	end ADDMATRIX; 
+
+begin 
+	
+	process(clk) 
+	begin
+		ADDMATRIX(AA,BB,CC);
+		
+	end process;
+end behavior;

@@ -1,0 +1,55 @@
+4-bit shift register
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity shiftregister is
+ port ( D: in bit_vector(3 downto 0);
+        S: in bit_vector(1 downto 0);
+	SDR, SDL, clk, CLRb: in bit;
+        Q: inout bit_vector(3 downto 0));
+end shiftregister;
+
+architecture structure of shiftregister is
+signal sel: bit_vector(1 downto 0);
+begin
+process(clk, CLRb)
+begin 
+if CLRb = '0' then Q <= "0000";
+ elsif (clk'event and clk = '1' ) then
+   case S is
+    when "11" => Q <= D;
+    when "10" => Q <= SDR & Q(3 downto 1);
+    when "01" => Q <= Q(2 downto 0) & SDL ;
+    when "00" => Q <= Q;
+   end case;
+end if;
+end process;
+end structure; 
+
+
+8-bit shift register
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity eightshift is
+ port( X: in bit_vector (7 downto 0);    
+       S: in bit_vector (1 downto 0);
+       RSD, LSD, CLRb, clk: in bit;
+       Y: inout bit_vector (7 downto 0));
+end eightshift;
+
+architecture str of eightshift is
+component shift
+  port ( D: in bit_vector(3 downto 0);
+         S: in bit_vector(1 downto 0);
+	 SDR, SDL, clk, CLRb: in bit;
+         Q: inout bit_vector(3 downto 0));
+end component;
+--sigal Q:std_logic_vector(7 downto 0);
+begin
+shift0: shift port map(X(3 downto 0), S, Y(4), LSD, CLRb, clk, Y(3 downto 0));
+shift1: shift port map(X(7 downto 4), S, RSD, Y(3), CLRb, clk, Y(7 downto 4));
+--Y(7 downto 0)<=Q;
+end str;
